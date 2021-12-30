@@ -8,6 +8,9 @@
     "devstart": "nodemon index.js",
     "serverstart": "DEBUG=socket:* npm run devstart"
   },
+  "engines": {
+    "node": "17.1.0"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
