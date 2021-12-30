@@ -1,4 +1,3 @@
-const { createServer } = require('http');
 var cors = require('cors');
 var socketPort = normalizePort(process.env.SOCKET_PORT || '5000');
 
@@ -19,9 +18,9 @@ function normalizePort(val) {
 }
 
 //beginning of socket.io===============
-const httpServer = createServer();
+var httpServer = require('http').createServer();
 httpServer.listen(socketPort);
-
+/*
 const io = require('socket.io')(httpServer, {
     cors: {
         // white lists
@@ -37,6 +36,33 @@ const io = require('socket.io')(httpServer, {
         allowedHeaders: ['Content-Type', 'Accept'],
         //credentials: true,
     },
+});
+*/
+const io = require('socket.io')(httpServer, (req, res, next) => {
+    var allowedDomains = [
+        'http://localhost:3000',
+        'http://localhost:3001',
+        'http://127.0.0.1:3000',
+        'http://172.19.133.104:3001',
+        'http://172.19.133.104:3000',
+        'https://samgliu.github.io',
+        'http://samgliu.github.io',
+        'ws://samgliu.github.io',
+    ];
+    var origin = req.headers.origin;
+    if (allowedDomains.indexOf(origin) > -1) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    res.setHeader(
+        'Access-Control-Allow-Methods',
+        'GET, POST, OPTIONS, PUT, PATCH, DELETE'
+    );
+    res.setHeader(
+        'Access-Control-Allow-Headers',
+        'Content-Type, Accept, X-Access-Token, X-Refresh-Token' //,x-access-token
+    );
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
 });
 
 let users = [];
