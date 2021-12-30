@@ -34,7 +34,7 @@ const io = require('socket.io')(httpServer, {
         ],
         methods: ['GET', 'POST', 'OPTIONS'],
         allowedHeaders: ['Content-Type', 'Accept'],
-        credentials: true,
+        //credentials: true,
     },
 });
 
