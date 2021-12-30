@@ -49,6 +49,12 @@ function normalizePort(val) {
     return false;
 }
 
+app.use(function secure(req, res, next) {
+    req.headers['x-forwarded-proto'] = 'https';
+    next();
+});
+app.set('trust proxy', 1); // trusting proxy
+
 //beginning of socket.io===============
 
 /*
