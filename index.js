@@ -18,23 +18,20 @@ function normalizePort(val) {
 }
 
 //beginning of socket.io===============
-var httpServer = require('http').createServer();
-httpServer.listen(socketPort);
-
-const io = require('socket.io')(httpServer, {
+const io = require('socket.io')(socketPort, {
     cors: {
         // white lists
         origin: [
             'http://localhost:3000',
-            'https://localhost:3000',
             'http://localhost:3001',
-            'https://localhost:3001',
+            'http://127.0.0.1:3000',
+            'http://172.19.133.104:3001',
+            'http://172.19.133.104:3000',
             'https://samgliu.github.io',
             'http://samgliu.github.io',
         ],
-        methods: ['GET', 'POST', 'OPTIONS'],
-        allowedHeaders: ['Content-Type', 'Accept'],
-        //credentials: true,
+        secure: true,
+        credentials: true,
     },
 });
 
