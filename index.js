@@ -1,4 +1,5 @@
 const { createServer } = require('http');
+var cors = require('cors');
 var socketPort = normalizePort(process.env.SOCKET_PORT || '5000');
 
 function normalizePort(val) {
@@ -17,10 +18,10 @@ function normalizePort(val) {
     return false;
 }
 
-httpServer.listen(socketPort);
-
 //beginning of socket.io===============
 const httpServer = createServer();
+httpServer.listen(socketPort);
+
 const io = require('socket.io')(httpServer, {
     cors: {
         // white lists
