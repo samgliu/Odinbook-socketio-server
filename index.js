@@ -1,35 +1,3 @@
-const express = require('express');
-const { createServer } = require('http');
-const { Server } = require('socket.io');
-const app = express();
-
-app.use(function (req, res, next) {
-    var allowedDomains = [
-        'http://localhost:3000',
-        'http://localhost:3001',
-        'http://127.0.0.1:3000',
-        'http://172.19.133.104:3001',
-        'http://172.19.133.104:3000',
-        'https://samgliu.github.io',
-        'http://samgliu.github.io',
-        'ws://samgliu.github.io',
-    ];
-    var origin = req.headers.origin;
-    if (allowedDomains.indexOf(origin) > -1) {
-        res.setHeader('Access-Control-Allow-Origin', origin);
-    }
-    res.setHeader(
-        'Access-Control-Allow-Methods',
-        'GET, POST, OPTIONS, PUT, PATCH, DELETE'
-    );
-    res.setHeader(
-        'Access-Control-Allow-Headers',
-        'Content-Type, Accept, X-Access-Token, X-Refresh-Token' //,x-access-token
-    );
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    next();
-});
-
 var cors = require('cors');
 var socketPort = normalizePort(process.env.SOCKET_PORT || '5000');
 
@@ -49,15 +17,10 @@ function normalizePort(val) {
     return false;
 }
 
-app.use(function secure(req, res, next) {
-    req.headers['x-forwarded-proto'] = 'https';
-    next();
-});
-app.set('trust proxy', 1); // trusting proxy
-
 //beginning of socket.io===============
+var httpServer = require('http').createServer();
+httpServer.listen(socketPort);
 
-/*
 const io = require('socket.io')(httpServer, {
     cors: {
         // white lists
@@ -74,34 +37,7 @@ const io = require('socket.io')(httpServer, {
         //credentials: true,
     },
 });
-*/ /*
-const io = require('socket.io')(httpServer, (req, res, next) => {
-    var allowedDomains = [
-        'http://localhost:3000',
-        'http://localhost:3001',
-        'http://127.0.0.1:3000',
-        'http://172.19.133.104:3001',
-        'http://172.19.133.104:3000',
-        'https://samgliu.github.io',
-        'http://samgliu.github.io',
-        'ws://samgliu.github.io',
-    ];
-    var origin = req.headers.origin;
-    if (allowedDomains.indexOf(origin) > -1) {
-        res.setHeader('Access-Control-Allow-Origin', origin);
-    }
-    res.setHeader(
-        'Access-Control-Allow-Methods',
-        'GET, POST, OPTIONS, PUT, PATCH, DELETE'
-    );
-    res.setHeader(
-        'Access-Control-Allow-Headers',
-        'Content-Type, Accept, X-Access-Token, X-Refresh-Token' //,x-access-token
-    );
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    next();
-});
-*/
+
 let users = [];
 
 const addUser = (userId, socketId) => {
@@ -124,10 +60,6 @@ const getUser = async (userId) => {
     theUser = users.find((user) => user.userId === userId);
     return theUser;
 };
-
-const httpServer = createServer(app);
-const io = new Server(httpServer);
-httpServer.listen(socketPort);
 
 io.on('connection', (socket) => {
     console.log('A user connected with ID: ' + socket.id);
