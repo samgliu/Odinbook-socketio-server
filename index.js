@@ -1,3 +1,9 @@
+const express = require('express');
+const { createServer } = require('http');
+const { Server } = require('socket.io');
+const app = express();
+const httpServer = createServer(app);
+
 var cors = require('cors');
 var socketPort = normalizePort(process.env.SOCKET_PORT || '5000');
 
@@ -18,7 +24,22 @@ function normalizePort(val) {
 }
 
 //beginning of socket.io===============
-var httpServer = require('http').createServer();
+const io = new Server(httpServer, {
+    cors: {
+        // white lists
+        origin: [
+            'http://localhost:3000',
+            'https://localhost:3000',
+            'http://localhost:3001',
+            'https://localhost:3001',
+            'https://samgliu.github.io',
+            'http://samgliu.github.io',
+        ],
+        methods: ['GET', 'POST', 'OPTIONS'],
+        allowedHeaders: ['Content-Type', 'Accept'],
+        //credentials: true,
+    },
+});
 httpServer.listen(socketPort);
 /*
 const io = require('socket.io')(httpServer, {
@@ -37,7 +58,7 @@ const io = require('socket.io')(httpServer, {
         //credentials: true,
     },
 });
-*/
+*/ /*
 const io = require('socket.io')(httpServer, (req, res, next) => {
     var allowedDomains = [
         'http://localhost:3000',
@@ -64,7 +85,7 @@ const io = require('socket.io')(httpServer, (req, res, next) => {
     res.setHeader('Access-Control-Allow-Credentials', true);
     next();
 });
-
+*/
 let users = [];
 
 const addUser = (userId, socketId) => {
