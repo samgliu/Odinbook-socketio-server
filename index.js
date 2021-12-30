@@ -30,8 +30,6 @@ app.use(function (req, res, next) {
     next();
 });
 
-const httpServer = createServer(app);
-
 var cors = require('cors');
 var socketPort = normalizePort(process.env.SOCKET_PORT || '5000');
 
@@ -52,7 +50,6 @@ function normalizePort(val) {
 }
 
 //beginning of socket.io===============
-const io = new Server(httpServer);
 
 /*
 const io = require('socket.io')(httpServer, {
@@ -122,6 +119,10 @@ const getUser = async (userId) => {
     return theUser;
 };
 
+const httpServer = createServer(app);
+const io = new Server(httpServer);
+httpServer.listen(socketPort);
+
 io.on('connection', (socket) => {
     console.log('A user connected with ID: ' + socket.id);
     // connect userId and socketId
@@ -178,5 +179,3 @@ io.on('connection', (socket) => {
     });
 });
 //end of socket.io===============
-
-httpServer.listen(socketPort);
