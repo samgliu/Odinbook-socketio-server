@@ -20,15 +20,7 @@ function normalizePort(val) {
 const io = require('socket.io')(socketPort, {
     cors: {
         // white lists
-        origin: [
-            'http://localhost:3000',
-            'http://localhost:3001',
-            'http://127.0.0.1:3000',
-            'http://172.19.133.104:3001',
-            'http://172.19.133.104:3000',
-            'https://samgliu.github.io',
-            'http://samgliu.github.io',
-        ],
+        origin: '*',
         secure: true,
         credentials: true,
     },
