@@ -33,8 +33,8 @@ const io = require('socket.io')(httpServer, {
             'https://samgliu.github.io',
             'http://samgliu.github.io',
         ],
-        methods: 'GET, POST, OPTIONS',
-        allowedHeaders: 'Content-Type, Accept, X-Access-Token, X-Refresh-Token',
+        methods: ['GET', 'POST', 'OPTIONS'],
+        allowedHeaders: ['Content-Type', 'Accept'],
         //credentials: true,
     },
 });
