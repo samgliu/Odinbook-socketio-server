@@ -1,5 +1,5 @@
 var cors = require('cors');
-var socketPort = process.env.SOCKET_PORT || '5000';
+var socketPort = process.env.PORT || 5000;
 
 //beginning of socket.io===============
 const io = require('socket.io')(socketPort, {
