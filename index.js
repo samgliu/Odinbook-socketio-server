@@ -1,21 +1,5 @@
 var cors = require('cors');
-var socketPort = normalizePort(process.env.SOCKET_PORT || '5000');
-
-function normalizePort(val) {
-    var port = parseInt(val, 10);
-
-    if (isNaN(port)) {
-        // named pipe
-        return val;
-    }
-
-    if (port >= 0) {
-        // port number
-        return port;
-    }
-
-    return false;
-}
+var socketPort = process.env.SOCKET_PORT || '5000';
 
 //beginning of socket.io===============
 const io = require('socket.io')(socketPort, {
