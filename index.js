@@ -1,7 +1,6 @@
+//beginning of socket.io===============
 var cors = require('cors');
 var socketPort = process.env.PORT || 5000;
-
-//beginning of socket.io===============
 const io = require('socket.io')(socketPort, {
     cors: {
         // white lists
@@ -33,12 +32,12 @@ const addUser = (userId, socketId) => {
             return true;
         }
     }) && users.push({ userId, socketId });
-    console.log(users);
+    //console.log(users);
 };
 
 const removeUser = (socketId) => {
     users = users.filter((user) => users.socketId !== socketId);
-    console.log(users);
+    //console.log(users);
 };
 
 const getUser = async (userId) => {
@@ -47,9 +46,9 @@ const getUser = async (userId) => {
 };
 
 io.on('connection', (socket) => {
-    console.log('A user connected with ID: ' + socket.id);
+    //console.log('A user connected with ID: ' + socket.id);
     // connect userId and socketId
-    console.log(' %s sockets connected', io.engine.clientsCount);
+    //console.log(' %s sockets connected', io.engine.clientsCount);
     socket.on('addUser', (userId) => {
         addUser(userId, socket.id);
         io.emit('getUsers', users);
@@ -57,17 +56,17 @@ io.on('connection', (socket) => {
 
     // send and get message
     socket.on('sendMessage', ({ senderId, receiverId, text }) => {
-        console.log(socket.id);
+        //console.log(socket.id);
         const user = getUser(receiverId).then((theUser) => {
-            console.log('users');
+            /*console.log('users');
             console.log(users);
             console.log('user');
             console.log(theUser);
             console.log({ senderId, receiverId, text });
-            //console.log(theUser.socketId);
+            //console.log(theUser.socketId);*/
 
             if (theUser && theUser.socketId) {
-                console.log(theUser.socketId);
+                // console.log(theUser.socketId);
                 socket.broadcast.to(theUser.socketId).emit('getMessage', {
                     receiverId: receiverId,
                     senderId: senderId,
@@ -96,7 +95,7 @@ io.on('connection', (socket) => {
 
     // disconnect
     socket.on('disconnet', () => {
-        console.log('A user disconnected');
+        //console.log('A user disconnected');
         removeUser(socket.id);
         io.emit('getUsers', users);
     });
