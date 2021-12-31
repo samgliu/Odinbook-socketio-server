@@ -29,9 +29,12 @@ const io = require('socket.io')(socketPort, {
             'http://172.19.133.104:3000',
             'https://samgliu.github.io',
             'http://samgliu.github.io',
+            'ws://nameless-harbor-96114.herokuapp.com',
+            'http://nameless-harbor-96114.herokuapp.com',
+            'https://nameless-harbor-96114.herokuapp.com',
         ],
-        secure: true,
-        credentials: true,
+        //secure: true,
+        //credentials: true,
     },
 });
 
