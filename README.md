@@ -12,16 +12,16 @@
 
 Server repository: https://github.com/samgliu/Odinbook-Server  
 socket.io server: https://github.com/samgliu/Odinbook-socketio-server  
-Server API Demo: https://fast-depths-49064.herokuapp.com/
+Server API Demo: https://odinbook-server-production.up.railway.app
 
 Client repository: https://github.com/samgliu/Odinbook-Client  
 Client Demo: https://samgliu.github.io/Odinbook-Client/
 
 # Built With
 
--   express
--   Node.js
+- express
+- Node.js
 
 # Feature:
 
--   real-time chat and notification
+- real-time chat and notification
