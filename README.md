@@ -6,7 +6,7 @@
 
     This socket.io server offers real-time chatting and notification for my OdinBook full-stack web application.
 
-[<h2>Live Demo</h2>](https://samgliu.github.io/Odinbook-Client/)
+- [Live Demo](https://samgliu.github.io/Odinbook-Client/)
 
 # Repositories
 
